@@ -6,7 +6,7 @@ resource "aws_vpc" "roboshop_vpc" {
 
   tags = merge(
     var.vpc_tags,
-    local.comon_tag, {
+    local.common_tag, {
       Name = "${var.project}-${var.env}"
     }
   )
@@ -18,7 +18,7 @@ resource "aws_internet_gateway" "roboshop_igw" {
 
   tags = merge(
     var.igw_tags,
-    local.comon_tag, {
+    local.common_tag, {
       Name = "${var.project}-${var.env}"
     }
   )
@@ -34,7 +34,7 @@ resource "aws_subnet" "public_subnets" {
 
   tags = merge(
     var.pub_tags,
-    local.comon_tag, {
+    local.common_tag, {
       Name = "${var.project}-${var.env}-public-${local.az_name[count.index]}"
     }
   )
@@ -49,7 +49,7 @@ resource "aws_subnet" "private_subnets" {
 
   tags = merge(
     var.pri_tags,
-    local.comon_tag, {
+    local.common_tag, {
       Name = "${var.project}-${var.env}-private-${local.az_name[count.index]}"
     }
   )
@@ -64,7 +64,7 @@ resource "aws_subnet" "db_subnets" {
 
   tags = merge(
     var.data_tags,
-    local.comon_tag, {
+    local.common_tag, {
       Name = "${var.project}-${var.env}-database-${local.az_name[count.index]}"
     }
   )
@@ -76,7 +76,7 @@ resource "aws_eip" "nat_eip" {
 
   tags = merge(
     var.eip_tags,
-    local.comon_tag, {
+    local.common_tag, {
       Name = "${var.project}-${var.env}"
     }
   )
@@ -89,7 +89,7 @@ resource "aws_nat_gateway" "roboshop_nat" {
 
   tags = merge(
     var.nat_tags,
-    local.comon_tag, {
+    local.common_tag, {
       Name = "${var.project}-${var.env}"
     }
   )
@@ -103,7 +103,7 @@ resource "aws_route_table" "public_rt" {
 
   tags = merge(
     var.publicroute_tags,
-    local.comon_tag, {
+    local.common_tag, {
       Name = "${var.project}-${var.env}-public"
     }
   )
@@ -114,7 +114,7 @@ resource "aws_route_table" "private_rt" {
 
   tags = merge(
     var.privateroute_tags,
-    local.comon_tag, {
+    local.common_tag, {
       Name = "${var.project}-${var.env}-private"
     }
   )
@@ -125,7 +125,7 @@ resource "aws_route_table" "db_rt" {
 
   tags = merge(
     var.databaseroute_tags,
-    local.comon_tag, {
+    local.common_tag, {
       Name = "${var.project}-${var.env}-database"
     }
   )
