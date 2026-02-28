@@ -10,6 +10,7 @@ resource "aws_vpc" "roboshop" {
   })
 }
 
+# internet gateway
 resource "aws_internet_gateway" "roboshop-igw" {
   vpc_id = aws_vpc.roboshop.id
 
@@ -18,6 +19,7 @@ resource "aws_internet_gateway" "roboshop-igw" {
   })
 }
 
+# Subnets
 #roboshop-dev-public-us-east-1a
 resource "aws_subnet" "roboshop-public" {
   vpc_id     = aws_vpc.roboshop.id
@@ -97,6 +99,7 @@ resource "aws_route_table" "database_route" {
   })
 }
 
+# routes
 resource "aws_route" "public" {
   route_table_id            = aws_route_table.public_route.id
   destination_cidr_block    = "0.0.0.0/0"
@@ -113,4 +116,23 @@ resource "aws_route" "databse" {
   route_table_id            = aws_route_table.database_route.id
   destination_cidr_block    = "0.0.0.0/0"
   nat_gateway_id = aws_nat_gateway.natgateway.id
+}
+
+#subnet route table assosiations
+resource "aws_route_table_association" "public-subnet-association" {
+  count = length(var.public_subnet_cidr)
+  subnet_id      = aws_subnet.roboshop-public[count.index].id
+  route_table_id = aws_route_table.public_route.id
+}
+
+resource "aws_route_table_association" "private-subnet-association" {
+  count = length(var.private_subnet_cidr)
+  subnet_id      = aws_subnet.roboshop-private[count.index].id
+  route_table_id = aws_route_table.private_route.id
+}
+
+resource "aws_route_table_association" "databse-subnet-association" {
+  count = length(var.database_subnet_cidr)
+  subnet_id      = aws_subnet.roboshop-database[count.index].id
+  route_table_id = aws_route_table.database_route.id
 }
