@@ -17,3 +17,4 @@ resource "aws_vpc_peering_connection" "foo" {
     Name = "${var.project}-${var.environment}-peering"
   })
 }
+
