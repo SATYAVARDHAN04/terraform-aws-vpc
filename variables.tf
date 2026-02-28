@@ -32,3 +32,8 @@ variable "nat_tags" {
     type = map()
     default = {}
 }
+
+variable "eip_tags" {
+    type = map()
+    default = {}
+}
