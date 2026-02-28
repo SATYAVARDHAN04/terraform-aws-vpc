@@ -56,3 +56,18 @@ resource "aws_subnet" "roboshop-databse" {
     Name="${var.project}-${var.environment}-databse-${data.aws_availability_zones.availableaz.names[count.index]}"
   })
 }
+
+#Elastic IP
+resource "aws_eip" "elasticip" {
+  domain   = "vpc"
+}
+
+resource "aws_nat_gateway" "example" {
+  allocation_id = aws_eip.elasticip.id
+  subnet_id     = aws_subnet.roboshop-public[0].id
+
+  tags = merge(local.common_tags,{
+    Name = "${var.project}-${var.environment}-natgateway"
+  })
+  depends_on = [aws_internet_gateway.roboshop-igw]
+}

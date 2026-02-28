@@ -27,3 +27,8 @@ variable "vpc_tags" {
     type = map()
     default = {}
 }
+
+variable "nat_tags" {
+    type = map()
+    default = {}
+}
