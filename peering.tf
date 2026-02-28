@@ -1,4 +1,4 @@
-resource "aws_vpc_peering_connection" "foo" {
+resource "aws_vpc_peering_connection" "peer" {
   count = var.is_peering_required ? 1 : 0
   # peer_owner_id = var.peer_owner_id --> since same account default is taken
   peer_vpc_id = data.aws_vpc.default.id
@@ -22,21 +22,21 @@ resource "aws_route" "public_peering" {
   count                     = var.is_peering_required ? 1 : 0
   route_table_id            = aws_route_table.public_route.id
   destination_cidr_block    = data.aws_vpc.default.cidr_block
-  vpc_peering_connection_id = aws_vpc_peering_connection.default[count.index].id #note this the peering id
+  vpc_peering_connection_id = aws_vpc_peering_connection.peer[count.index].id #note this the peering id
 }
 
 resource "aws_route" "private_peering" {
   count                     = var.is_peering_required ? 1 : 0
   route_table_id            = aws_route_table.private_route.id
   destination_cidr_block    = data.aws_vpc.default.cidr_block
-  vpc_peering_connection_id = aws_vpc_peering_connection.default[count.index].id #note this the peering id
+  vpc_peering_connection_id = aws_vpc_peering_connection.peer[count.index].id #note this the peering id
 }
 
 resource "aws_route" "database_peering" {
   count                     = var.is_peering_required ? 1 : 0
   route_table_id            = aws_route_table.database_route.id
   destination_cidr_block    = data.aws_vpc.default.cidr_block
-  vpc_peering_connection_id = aws_vpc_peering_connection.default[count.index].id #note this the peering id
+  vpc_peering_connection_id = aws_vpc_peering_connection.peer[count.index].id #note this the peering id
 }
 
 # we should it in default vpc main route table
@@ -44,5 +44,5 @@ resource "aws_route" "default_peering" {
   count                     = var.is_peering_required ? 1 : 0
   route_table_id            = data.aws_route_table.default.id
   destination_cidr_block    = var.cidr
-  vpc_peering_connection_id = aws_vpc_peering_connection.default[count.index].id #note -- this the peering id
+  vpc_peering_connection_id = aws_vpc_peering_connection.peer[count.index].id #note -- this the peering id
 }
