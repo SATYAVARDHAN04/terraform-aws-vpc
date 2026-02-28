@@ -1,3 +1,4 @@
+#VPC CREATION
 # roboshop-dev-vpc
 # roboshop-dev-igw
 resource "aws_vpc" "roboshop" {
