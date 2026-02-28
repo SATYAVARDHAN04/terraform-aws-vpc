@@ -51,13 +51,13 @@ variable "private_rt_tags" {
 variable "database_rt_tags" {
   type    = map(string)
   default = {}
-} 
+}
 
 variable "is_peering_required" {
   default = false
 }
 
 variable "vpc_peering_tags" {
-  type = map(string)
+  type    = map(string)
   default = {}
 }
