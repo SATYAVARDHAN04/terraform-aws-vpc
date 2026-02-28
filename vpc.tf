@@ -65,7 +65,7 @@ resource "aws_eip" "elasticip" {
   })
 }
 
-resource "aws_nat_gateway" "example" {
+resource "aws_nat_gateway" "natgateway" {
   allocation_id = aws_eip.elasticip.id
   subnet_id     = aws_subnet.roboshop-public[0].id
 
