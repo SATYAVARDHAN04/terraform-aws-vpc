@@ -89,14 +89,14 @@ resource "aws_route_table" "public_route" {
 resource "aws_route_table" "private_route" {
   vpc_id = aws_vpc.roboshop.id
   tags = merge(local.common_tags, var.private_rt_tags, {
-    Name = "${var.project}-${var.environment}-publicrt"
+    Name = "${var.project}-${var.environment}-privatert"
   })
 }
 
 resource "aws_route_table" "database_route" {
   vpc_id = aws_vpc.roboshop.id
   tags = merge(local.common_tags, var.database_rt_tags, {
-    Name = "${var.project}-${var.environment}-publicrt"
+    Name = "${var.project}-${var.environment}-databasert"
   })
 }
 
