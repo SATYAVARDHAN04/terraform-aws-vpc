@@ -48,7 +48,7 @@ resource "aws_subnet" "roboshop-private" {
 }
 
 #roboshop-dev-database-us-east-1a
-resource "aws_subnet" "roboshop-databse" {
+resource "aws_subnet" "roboshop-database" {
   vpc_id                  = aws_vpc.roboshop.id
   count                   = length(var.database_subnet_cidr)
   cidr_block              = var.database_subnet_cidr[count.index]
