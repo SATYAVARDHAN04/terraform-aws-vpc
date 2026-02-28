@@ -74,3 +74,37 @@ resource "aws_nat_gateway" "natgateway" {
   })
   depends_on = [aws_internet_gateway.roboshop-igw]
 }
+
+# route tables
+resource "aws_route_table" "public_route" {
+  vpc_id = aws_vpc.roboshop.id
+  tags = merge(local.common_tags,var.public_rt_tags,{
+    Name = "${var.project}-${var.environment}-publicrt"
+  })
+}
+
+resource "aws_route_table" "private_route" {
+  vpc_id = aws_vpc.roboshop.id
+  tags = merge(local.common_tags,var.private_rt_tags,{
+    Name = "${var.project}-${var.environment}-publicrt"
+  })
+}
+
+resource "aws_route_table" "public_route" {
+  vpc_id = aws_vpc.roboshop.id
+  tags = merge(local.common_tags,var.database_rt_tags,{
+    Name = "${var.project}-${var.environment}-publicrt"
+  })
+}
+
+resource "aws_route" "public" {
+  route_table_id            = aws_route_table.public_route.id
+  destination_cidr_block    = "0.0.0.0/0"
+  gateway_id = aws_internet_gateway.roboshop-igw.id
+}
+
+resource "aws_route" "private" {
+  route_table_id            = aws_route_table.public_route.id
+  destination_cidr_block    = "0.0.0.0/0"
+  nat_gateway_id = aws_nat_gateway.natgateway.id
+}
