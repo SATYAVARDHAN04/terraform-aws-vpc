@@ -7,3 +7,7 @@ data "aws_availability_zones" "availableaz" {
 # output "az-testing" {
 #     value = data.aws_availability_zones.available
 # }
+
+data "aws_vpc" "default" {
+  default = true
+}
