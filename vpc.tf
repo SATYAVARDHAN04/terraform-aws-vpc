@@ -90,7 +90,7 @@ resource "aws_route_table" "private_route" {
   })
 }
 
-resource "aws_route_table" "public_route" {
+resource "aws_route_table" "database_route" {
   vpc_id = aws_vpc.roboshop.id
   tags = merge(local.common_tags,var.database_rt_tags,{
     Name = "${var.project}-${var.environment}-publicrt"
@@ -104,7 +104,13 @@ resource "aws_route" "public" {
 }
 
 resource "aws_route" "private" {
-  route_table_id            = aws_route_table.public_route.id
+  route_table_id            = aws_route_table.private_route.id
+  destination_cidr_block    = "0.0.0.0/0"
+  nat_gateway_id = aws_nat_gateway.natgateway.id
+}
+
+resource "aws_route" "databse" {
+  route_table_id            = aws_route_table.database_route.id
   destination_cidr_block    = "0.0.0.0/0"
   nat_gateway_id = aws_nat_gateway.natgateway.id
 }
