@@ -22,3 +22,8 @@ variable "private_subnet_cidr" {
 variable "database_subnet_cidr" {
     type = list(string)
 }
+
+variable "vpc_tags" {
+    type = map()
+    default = {}
+}
