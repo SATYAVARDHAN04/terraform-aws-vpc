@@ -24,31 +24,31 @@ variable "database_subnet_cidr" {
 }
 
 variable "vpc_tags" {
-  type    = map()
+  type    = map(string)
   default = {}
 }
 
 variable "nat_tags" {
-  type    = map()
+  type    = map(string)
   default = {}
 }
 
 variable "eip_tags" {
-  type    = map()
+  type    = map(string)
   default = {}
 }
 
 variable "public_rt_tags" {
-  type    = map()
+  type    = map(string)
   default = {}
 }
 
 variable "private_rt_tags" {
-  type    = map()
+  type    = map(string)
   default = {}
 }
 
 variable "database_rt_tags" {
-  type    = map()
+  type    = map(string)
   default = {}
 } 
