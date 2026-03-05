@@ -136,4 +136,4 @@ resource "aws_route_table_association" "databse-subnet-association" {
   count          = length(var.database_subnet_cidr)
   subnet_id      = aws_subnet.roboshop-database[count.index].id
   route_table_id = aws_route_table.database_route.id
-}
+} 
